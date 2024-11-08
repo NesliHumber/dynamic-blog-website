@@ -1,13 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const postContainer = document.getElementById('blog-post');
-    const editButton = document.getElementById('edit-button');
-    let currentPost = null;
+    const postContainer = document.getElementById('blog-post'); // The blog post will be displayed in that container element.
+    const editButton = document.getElementById('edit-button'); // Edit button web element
+    const deleteButton = document.getElementById('delete-button'); // Delete button web element
+    let currentPost = null; // The element that stores the currently displayed post.
 
+    // Below function retrieves the post ID from the URL:
     function getPostIdFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get('id');
     }
 
+    // Below function gets post ID from URL via getPostIdFromUrl(), 
+    // gets all posts from local storage, 
+    // and displays the post with the matching ID to the ID from the URL:
     function loadPost() {
         const postId = getPostIdFromUrl();
         const posts = JSON.parse(localStorage.getItem('blogPosts')) || [];
@@ -20,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Below function displays the post to the postContainer element:
     function displayPost() {
         postContainer.innerHTML = `
             <h2>${currentPost.title}</h2>
@@ -29,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
+    // Below function enables editing the post by replacing the current postContainer with edited fields:
     function enableEditing() {
         postContainer.innerHTML = `
             <input type="text" id="edit-title" value="${currentPost.title}">
@@ -40,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('save-button').addEventListener('click', saveChanges);
     }
 
+    // Below function gets edited post data, saves it to the local storage, and displays the updated post via displayPost():
     function saveChanges() {
         const newTitle = document.getElementById('edit-title').value.trim();
         const newContent = document.getElementById('edit-content').value.trim();
@@ -50,27 +58,14 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPost.content = newContent;
             currentPost.imageUrl = newImageUrl;
 
-            const posts = JSON.parse(localStorage.getItem('blogPosts')) || [];
-            const updatedPosts = posts.map(post => post.id === currentPost.id ? currentPost : post);
-            localStorage.setItem('blogPosts', JSON.stringify(updatedPosts));
-
+            updateLocalStorage();
             displayPost();
         } else {
             alert('Title and content cannot be empty.');
         }
     }
 
-    editButton.addEventListener('click', enableEditing);
-
-    loadPost();
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const postContainer = document.getElementById('blog-post');
-    const editButton = document.getElementById('edit-button');
-    const deleteButton = document.getElementById('delete-button');
-    let currentPost = null;
-
+    // Below function deletes the post from local storage and redirects to the index page:
     function deletePost() {
         if (confirm('Are you sure you want to delete this post?')) {
             const posts = JSON.parse(localStorage.getItem('blogPosts')) || [];
@@ -80,18 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function loadPost() {
-        const postId = getPostIdFromUrl();
+    function updateLocalStorage() {
         const posts = JSON.parse(localStorage.getItem('blogPosts')) || [];
-        currentPost = posts.find(post => post.id === postId);
-
-        if (currentPost) {
-            displayPost();
-        } else {
-            postContainer.innerHTML = '<p>Post not found.</p>';
-            editButton.style.display = 'none';
-            deleteButton.style.display = 'none';
-        }
+        const updatedPosts = posts.map(post => post.id === currentPost.id ? currentPost : post);
+        localStorage.setItem('blogPosts', JSON.stringify(updatedPosts));
     }
 
     editButton.addEventListener('click', enableEditing);
@@ -99,3 +86,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadPost();
 });
+
