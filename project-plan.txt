@@ -1,0 +1,33 @@
+Project Plan for Dynamic Blog Website
+
+1. Setup
+   - Create GitHub repository
+   - Clone repository locally
+   - Set up basic project file structure
+
+2. HTML Structure
+   - Create index.html (Homepage)
+   - Create new-post.html (Create Post page)
+   - Create post.html (View/Edit Post page)
+
+3. CSS Styling
+   - Create styles.css for common styles
+   - Style the homepage, new post page, and post page
+
+4. JavaScript Functionality
+   - Implement CRUD operations
+   - Create main.js for homepage functionality
+   - Create new-post.js for creating new posts
+   - Create post.js for viewing and editing posts
+
+5. Testing
+   - Test all CRUD operations
+   - Ensure responsive design works on different devices ???????
+
+6. Documentation
+   - Update README.md with project details and instructions
+
+7. Deployment
+   - Choose a hosting platform (e.g., GitHub Pages)
+   - Deploy the website
+
