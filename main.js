@@ -4,11 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadBlogPosts() {
         let posts = JSON.parse(localStorage.getItem('blogPosts')) || [];
         
-        if (posts.length === 0) {
-            blogPostsSection.innerHTML = '<p>No blog posts yet. Be the first to create one!</p>';
-            return;
-        }
-        
         posts.sort((a, b) => new Date(b.date) - new Date(a.date));
         
         blogPostsSection.innerHTML = posts.map(post => `

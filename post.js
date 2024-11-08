@@ -71,8 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const deleteButton = document.getElementById('delete-button');
     let currentPost = null;
 
-    // ... (keep the existing functions)
-
     function deletePost() {
         if (confirm('Are you sure you want to delete this post?')) {
             const posts = JSON.parse(localStorage.getItem('blogPosts')) || [];
